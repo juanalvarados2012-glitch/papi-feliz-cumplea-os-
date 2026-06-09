@@ -1,11 +1,11 @@
 # 🎉 ¡Feliz Cumpleaños Xavier! 🎂
 
-Un sitio web especial para celebrar el cumpleaños número **42** de Papá Xavier
-(nacido en **1983**), hecho con mucho amor por Juan y Joaquín.
+Un sitio web especial para celebrar el cumpleaños número **44** de Papá Xavier
+(nacido en **1982**), hecho con mucho amor por Nani y Joaquín.
 
 ## ✨ Qué incluye
 - 🎊 Animación de **confetti** que cae al abrir la página (y un botón para repetirla).
-- 🔢 Un **contador animado** que sube de **0 a 42** representando cada año de vida.
+- 🔢 Un **contador animado** que sube de **0 a 44** representando cada año de vida.
 - 🎈 Globos flotantes de colores.
 - 💌 Un mensaje personal para Papá.
 - 📸 Galería con fotos familiares.
