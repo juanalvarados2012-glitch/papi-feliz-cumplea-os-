@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Feliz Cumpleaños Xavier! 🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #f5b301;
+      --pink: #ff5e8a;
+      --purple: #7b2ff7;
+      --blue: #2d9cdb;
+      --dark: #1b1033;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(160deg, #2b1055 0%, #7597de 100%);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Confetti canvas sits on top of everything but doesn't block clicks */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .balloon-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .balloon {
+      position: absolute;
+      bottom: -160px;
+      width: 60px;
+      height: 75px;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: float-up linear infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.5);
+    }
+    @keyframes float-up {
+      0%   { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-120vh) translateX(40px); }
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .greeting {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      color: var(--gold);
+      text-shadow: 0 4px 20px rgba(0,0,0,.4);
+      animation: pop-in 1s ease both;
+    }
+
+    .age-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: .4rem;
+      margin: .5rem 0;
+      flex-wrap: wrap;
+    }
+    .feliz-word {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #fff;
+    }
+    #age-counter {
+      font-size: clamp(5rem, 22vw, 12rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(245,179,1,.4);
+    }
+    .name {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.5rem, 9vw, 6rem);
+      color: var(--pink);
+      text-shadow: 0 4px 24px rgba(0,0,0,.4);
+      animation: pop-in 1.2s ease both;
+    }
+
+    .subtitle {
+      margin-top: 1rem;
+      font-weight: 300;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      opacity: .9;
+    }
+    .year-note { font-weight: 600; color: var(--gold); }
+
+    @keyframes pop-in {
+      0% { transform: scale(.5); opacity: 0; }
+      70% { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .scroll-hint {
+      margin-top: 2.5rem;
+      font-size: .9rem;
+      opacity: .8;
+      animation: bob 1.6s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+
+    /* Message section */
+    .message {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .message h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .message-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      line-height: 1.8;
+      font-weight: 300;
+      box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    }
+    .message-card strong { color: var(--pink); font-weight: 600; }
+    .heart { color: var(--pink); display: inline-block; animation: beat 1.2s ease-in-out infinite; }
+    @keyframes beat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+
+    /* Gallery */
+    .gallery-section {
+      padding: 3rem 1.5rem 6rem;
+      position: relative;
+      z-index: 2;
+    }
+    .gallery-section h2 {
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+    .gallery {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .photo {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      transform: rotate(var(--rot, 0deg));
+      transition: transform .35s ease, box-shadow .35s ease;
+      background: #fff;
+      padding: 10px 10px 50px;
+    }
+    .photo:hover {
+      transform: rotate(0deg) scale(1.04);
+      box-shadow: 0 18px 45px rgba(0,0,0,.5);
+      z-index: 3;
+    }
+    .photo img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+    .photo .caption {
+      color: var(--dark);
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.1rem;
+      padding-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      font-weight: 300;
+      opacity: .85;
+      position: relative;
+      z-index: 2;
+    }
+    footer .big-heart { font-size: 2rem; color: var(--pink); animation: beat 1.2s ease-in-out infinite; }
+
+    .replay-btn {
+      margin-top: 1.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      padding: .8rem 1.6rem;
+      border-radius: 30px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(245,179,1,.4);
+      transition: transform .2s ease;
+    }
+    .replay-btn:hover { transform: translateY(-3px) scale(1.05); }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="balloon-bg" id="balloons"></div>
+    <div class="hero-content">
+      <div class="greeting">¡Feliz Cumpleaños!</div>
+      <div class="age-line">
+        <span class="feliz-word">Feliz</span>
+        <span id="age-counter">0</span>
+      </div>
+      <div class="name">Xavier</div>
+      <p class="subtitle">
+        De <span class="year-note">1983</span> a <span class="year-note">2025</span> ·
+        ¡42 años llenos de amor! 🎂
+      </p>
+      <div class="scroll-hint">⬇ Desliza para ver más ⬇</div>
+    </div>
+  </header>
+
+  <!-- MESSAGE -->
+  <section class="message">
+    <h2>Un mensaje para ti, Pa</h2>
+    <div class="message-card">
+      Pa, te amo <span class="heart">❤️</span> Gracias por levantarte temprano y
+      trabajar tanto para darnos lo que tenemos hoy. Gracias por hacernos buenas
+      personas a mí y al <strong>Joaquín</strong>. Te quiero.
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <h2>Nuestros recuerdos 📸</h2>
+    <div class="gallery">
+      <figure class="photo" style="--rot:-2deg">
+        <img src="images/xavier-chef.jpeg" alt="Xavier chef repostero" />
+        <figcaption class="caption">El mejor chef 👨‍🍳</figcaption>
+      </figure>
+      <figure class="photo" style="--rot:2deg">
+        <img src="images/familia-bakery.jpeg" alt="La familia en la bakery" />
+        <figcaption class="caption">Familia unida 🥐</figcaption>
+      </figure>
+      <figure class="photo" style="--rot:-1.5deg">
+        <img src="images/familia-avestruz.jpeg" alt="Día de paseo en familia" />
+        <figcaption class="caption">Aventuras juntos 🐦</figcaption>
+      </figure>
+      <figure class="photo" style="--rot:1.5deg">
+        <img src="images/papa-joaquin.jpeg" alt="Papá y Joaquín" />
+        <figcaption class="caption">Pa y Joaquín ⚾</figcaption>
+      </figure>
+      <figure class="photo" style="--rot:-2deg">
+        <img src="images/familia-restaurante.jpeg" alt="Comiendo en familia" />
+        <figcaption class="caption">Momentos en familia 🍽️</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <footer>
+    <div class="big-heart">❤️</div>
+    <p>Con todo nuestro amor — Juan &amp; Joaquín</p>
+    <button class="replay-btn" id="replay">🎉 ¡Más confetti!</button>
+  </footer>
+
+  <script>
+    /* ---------- Floating balloons ---------- */
+    (function makeBalloons() {
+      const colors = ['#f5b301', '#ff5e8a', '#7b2ff7', '#2d9cdb', '#ff9f43'];
+      const wrap = document.getElementById('balloons');
+      for (let i = 0; i < 14; i++) {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.style.left = Math.random() * 100 + '%';
+        b.style.background = colors[i % colors.length];
+        b.style.animationDuration = (8 + Math.random() * 8) + 's';
+        b.style.animationDelay = (Math.random() * 8) + 's';
+        const scale = 0.6 + Math.random() * 0.9;
+        b.style.transform = 'scale(' + scale + ')';
+        wrap.appendChild(b);
+      }
+    })();
+
+    /* ---------- Animated age counter 0 -> 42 ---------- */
+    function animateCounter() {
+      const el = document.getElementById('age-counter');
+      const target = 42;
+      const duration = 2600; // ms
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        // ease-out for a nice slow-down near the end
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target);
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+          el.style.transition = 'transform .3s ease';
+          el.style.transform = 'scale(1.15)';
+          setTimeout(() => (el.style.transform = 'scale(1)'), 300);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    /* ---------- Confetti ---------- */
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let pieces = [];
+    let confettiRunning = false;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const COLORS = ['#f5b301', '#ff5e8a', '#7b2ff7', '#2d9cdb', '#ff9f43', '#ffffff', '#2ecc71'];
+
+    function spawnConfetti(count) {
+      for (let i = 0; i < count; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: -20 - Math.random() * canvas.height * 0.5,
+          w: 6 + Math.random() * 8,
+          h: 8 + Math.random() * 10,
+          color: COLORS[(Math.random() * COLORS.length) | 0],
+          rot: Math.random() * Math.PI * 2,
+          vr: (Math.random() - 0.5) * 0.3,
+          vx: (Math.random() - 0.5) * 2,
+          vy: 2 + Math.random() * 3.5,
+          sway: Math.random() * 2 * Math.PI
+        });
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = pieces.length - 1; i >= 0; i--) {
+        const p = pieces[i];
+        p.sway += 0.02;
+        p.x += p.vx + Math.sin(p.sway) * 1.2;
+        p.y += p.vy;
+        p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+        if (p.y > canvas.height + 30) pieces.splice(i, 1);
+      }
+      if (pieces.length > 0) {
+        requestAnimationFrame(tick);
+      } else {
+        confettiRunning = false;
+      }
+    }
+
+    function burst() {
+      spawnConfetti(160);
+      if (!confettiRunning) {
+        confettiRunning = true;
+        requestAnimationFrame(tick);
+      }
+    }
+
+    /* Kick everything off on load */
+    window.addEventListener('load', () => {
+      animateCounter();
+      burst();
+      // a couple of follow-up bursts for a celebratory feel
+      setTimeout(burst, 900);
+      setTimeout(burst, 1900);
+    });
+
+    document.getElementById('replay').addEventListener('click', () => {
+      burst();
+      animateCounter();
+    });
+  </script>
+</body>
+</html>
